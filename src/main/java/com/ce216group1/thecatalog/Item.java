@@ -15,6 +15,12 @@ public class Item {
         this.descriptions = descriptions;
     }
 
+    public Item(String name) {
+        this.name = name;
+        tags = new ArrayList<>();
+        descriptions = new ArrayList<>();
+    }
+
     public Item() {
     }
 
