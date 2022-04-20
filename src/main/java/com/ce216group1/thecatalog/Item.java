@@ -5,11 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.ArrayList;
 
 public class Item {
-    private SimpleStringProperty name;
+    private String name;
     private ArrayList<SimpleStringProperty > tags;
     private ArrayList<SimpleStringProperty > descriptions;
 
-    public Item(SimpleStringProperty name, ArrayList<SimpleStringProperty> tags, ArrayList<SimpleStringProperty> descriptions) {
+    public Item(String name, ArrayList<SimpleStringProperty> tags, ArrayList<SimpleStringProperty> descriptions) {
         this.name = name;
         this.tags = tags;
         this.descriptions = descriptions;
@@ -19,15 +19,11 @@ public class Item {
     }
 
     public String getName() {
-        return name.get();
-    }
-
-    public SimpleStringProperty nameProperty() {
         return name;
     }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
     public ArrayList<SimpleStringProperty> getTags() {

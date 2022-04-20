@@ -5,17 +5,17 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.ArrayList;
 
 public class Type {
-    private SimpleStringProperty name;
+    private String name;
     private ArrayList<Item> items;
-    private ArrayList<SimpleStringProperty > attributes;
+    private ArrayList<SimpleStringProperty> attributes;
 
-    public Type(SimpleStringProperty name) {
+    public Type(String name) {
         this.name = name;
         items = new ArrayList<>();
         attributes = new ArrayList<>();
     }
 
-    public Type(SimpleStringProperty name,ArrayList<Item> items, ArrayList<SimpleStringProperty > attributes) {
+    public Type(String name,ArrayList<Item> items, ArrayList<SimpleStringProperty > attributes) {
         this.name = name;
         this.items = items;
         this.attributes = attributes;
@@ -25,15 +25,11 @@ public class Type {
     }
 
     public String getName() {
-        return name.get();
-    }
-
-    public SimpleStringProperty nameProperty() {
         return name;
     }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
     public ArrayList<Item> getItems() {
