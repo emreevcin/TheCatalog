@@ -7,21 +7,21 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ce216group1.thecatalog.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ce216group1.thecatalog.MainController">
    <children>
-      <Button layoutX="439.0" layoutY="277.0" mnemonicParsing="false" text="Delete" />
-      <Label layoutX="10.0" layoutY="313.0" prefHeight="17.0" prefWidth="62.0" text="Type:" />
-      <TextField layoutX="41.0" layoutY="309.0" />
-      <Button layoutX="200.0" layoutY="309.0" mnemonicParsing="false" text="Create" />
-      <Label layoutX="10.0" layoutY="348.0" text="Item:" />
-      <TextField layoutX="41.0" layoutY="344.0" />
-      <Button layoutX="200.0" layoutY="344.0" mnemonicParsing="false" text="Create" />
-      <Button layoutX="355.0" layoutY="277.0" mnemonicParsing="false" text="Edit Window" />
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+      <Button layoutX="248.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Delete" />
+      <Label layoutX="10.0" layoutY="246.0" prefHeight="17.0" prefWidth="62.0" text="Type:" />
+      <TextField layoutX="41.0" layoutY="242.0" />
+      <Button layoutX="201.0" layoutY="242.0" mnemonicParsing="false" text="Create" />
+      <Label layoutX="10.0" layoutY="276.0" text="Item:" />
+      <TextField layoutX="41.0" layoutY="272.0" />
+      <Button layoutX="201.0" layoutY="272.0" mnemonicParsing="false" text="Create" />
+      <Button layoutX="248.0" layoutY="204.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Edit" />
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="329.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -47,10 +47,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TreeTableView fx:id="treeTableView" editable="true" layoutX="110.0" layoutY="27.0" prefHeight="250.0" prefWidth="380.0" tableMenuButtonVisible="true">
-         <columnResizePolicy>
-            <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TreeTableView>
+      <TreeView layoutX="-1.0" layoutY="27.0" prefHeight="212.0" prefWidth="249.0" />
+      <Button layoutX="248.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Attributes" />
    </children>
 </AnchorPane>
