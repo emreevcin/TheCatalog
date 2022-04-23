@@ -1,8 +1,14 @@
 package com.ce216group1.thecatalog;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.net.URL;
@@ -72,10 +78,29 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    void edit(ActionEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view03.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setTitle("Table of Information");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch(
+                Exception e)
+
+        {
+            System.out.println("Cannot load new window!");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rootNode.setExpanded(true);
 
         treeView.setRoot(rootNode);
     }
+
 }
