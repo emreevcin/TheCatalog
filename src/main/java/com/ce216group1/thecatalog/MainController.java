@@ -146,7 +146,6 @@ public class MainController extends TreeCell<String> implements Initializable {
 
     @FXML
     void delete(ActionEvent e) {
-
         TreeItem c = (TreeItem) treeView.getSelectionModel().getSelectedItem();
         if (c == null) {
             return;
@@ -183,7 +182,7 @@ public class MainController extends TreeCell<String> implements Initializable {
         if (currentNode == null) {
             return;
         }
-            if (currentNode != null) {
+            if (currentNode.getParent() != null) {
                 Alert alert = new Alert(Alert.AlertType.WARNING,
                         "You are about edit an element!",
                         ButtonType.YES,
