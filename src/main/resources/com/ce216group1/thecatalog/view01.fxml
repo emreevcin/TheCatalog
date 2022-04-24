@@ -11,43 +11,43 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ce216group1.thecatalog.MainController">
-   <children>
-      <Button layoutX="248.0" layoutY="154.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="77.0" text="Delete" />
-      <Label layoutX="10.0" layoutY="246.0" prefHeight="17.0" prefWidth="62.0" text="Type:" />
-      <TextField layoutX="41.0" layoutY="242.0" />
-      <Button layoutX="201.0" layoutY="242.0" mnemonicParsing="false" text="Create" />
-      <Label layoutX="10.0" layoutY="276.0" text="Item:" />
-      <TextField layoutX="41.0" layoutY="272.0" />
-      <Button layoutX="201.0" layoutY="272.0" mnemonicParsing="false" text="Create" />
-      <Button layoutX="248.0" layoutY="204.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Edit" />
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="329.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="New">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TreeView fx:id="treeView" layoutX="-1.0" layoutY="27.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="212.0" prefWidth="249.0" />
-      <Button layoutX="248.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Attributes" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ce216group1.thecatalog.MainController">
+    <children>
+        <Button layoutX="278.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Delete" />
+        <Label layoutX="10.0" layoutY="273.0" prefHeight="17.0" prefWidth="33.0" text="Type:" />
+        <TextField fx:id="typeTF" layoutX="41.0" layoutY="269.0" />
+        <Button fx:id="typeCB" layoutX="190.0" layoutY="269.0" mnemonicParsing="false" onAction="#createType" text="Create" />
+        <Label layoutX="13.0" layoutY="301.0" text="Item:" />
+        <TextField fx:id="itemTF" layoutX="41.0" layoutY="297.0" />
+        <Button fx:id="itemCB" layoutX="190.0" layoutY="297.0" mnemonicParsing="false" onAction="#createItem" text="Create" />
+        <Button layoutX="278.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Edit" />
+        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="355.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TreeView fx:id="treeView" editable="true" layoutX="-1.0" layoutY="27.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="238.0" prefWidth="279.0" />
+        <Button layoutX="278.0" layoutY="215.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Attributes" />
+    </children>
 </AnchorPane>
