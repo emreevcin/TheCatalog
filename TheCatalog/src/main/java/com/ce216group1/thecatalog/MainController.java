@@ -1,17 +1,22 @@
 package com.ce216group1.thecatalog;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends TreeCell<String> implements Initializable {
 
     ArrayList<Type> types = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
@@ -35,7 +40,56 @@ public class MainController implements Initializable {
     @FXML
     private TextField taggedItemTF;
 
+    @FXML
     private TextField tagTF;
+
+    @FXML
+    private TextField textField;
+
+
+    ObservableList<Item> list = FXCollections.observableArrayList();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        rootNode.setExpanded(true);
+
+        for (Item item : list) {
+            TreeItem<String> itemLeaf = new TreeItem<>(item.getName());
+            boolean found = false;
+            for (TreeItem<String> typeNode : rootNode.getChildren()) {
+                if (typeNode.getValue().contentEquals(typeTF.getText())) {
+                    typeNode.getChildren().add(itemLeaf);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                TreeItem<String> typeNode = new TreeItem<String>(typeTF.getText());
+                rootNode.getChildren().add(typeNode);
+                typeNode.getChildren().add(itemLeaf);
+            }
+        }
+        treeView.setRoot(rootNode);
+        treeView.setEditable(true);
+
+        tableView.setEditable(true);
+
+
+        TableColumn type = new TableColumn("Type");
+        TableColumn name = new TableColumn("Item");
+
+        tableView.getColumns().addAll(type, name);
+
+
+        type.setCellValueFactory(new PropertyValueFactory<Item, String>("Type"));
+        name.setCellValueFactory(new PropertyValueFactory<Item, String>("Name"));
+
+
+        tableView.setItems(list);
+
+    }
+
 
     @FXML
     void createType() {
@@ -54,22 +108,25 @@ public class MainController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        treeView=new TreeView<String>();
-        tableView=new TableView<Item>();
-        rootNode.setExpanded(true);
-        treeView.setRoot(rootNode);
-    }
 
     @FXML
     void createItem() {
         if (itemTF.getText().length() != 0) {
             TreeItem<String> newItem = new TreeItem<>(itemTF.getText());
             TreeItem<String> itemNode = treeView.getSelectionModel().getSelectedItem();
-            Item item = new Item(itemTF.getText());
-            items.add(item);
-            itemNode.getChildren().add(newItem);
+            if (itemNode != null && itemNode != rootNode) {
+                Item item = new Item(itemTF.getText());
+                items.add(item);
+                itemNode.getChildren().add(newItem);
+
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Item Creation");
+                alert.setHeaderText("You must select which type you want to add the item to!");
+                alert.setContentText("Please try again by selecting the type you want to add the item to.");
+                alert.showAndWait();
+            }
             itemTF.setText("");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -96,8 +153,7 @@ public class MainController implements Initializable {
         }
         if (c.getParent() != null) {
             boolean remove = c.getParent().getChildren().remove(c);
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR!");
             alert.setHeaderText("Something went wrong:/");
@@ -106,7 +162,12 @@ public class MainController implements Initializable {
         }
     }
 
-
+    @FXML
+    void editTypeAndItem() {
+        TreeItem<String> currentNode = treeView.getSelectionModel().getSelectedItem();
+        currentNode.setValue(textField.getText());
+        currentNode.getChildren().clear();
+    }
 
     @FXML
     void createKey() {
@@ -115,6 +176,6 @@ public class MainController implements Initializable {
         keyTF.setText("");
         key.setCellValueFactory(new PropertyValueFactory<Item, String>(keyTF.getText()));
     }
+
 }
 
-//Doga
