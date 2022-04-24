@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view01.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view00.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("The Catalog");
         stage.setScene(scene);

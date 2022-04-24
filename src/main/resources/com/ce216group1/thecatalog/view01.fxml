@@ -20,7 +20,7 @@
       <Label layoutX="13.0" layoutY="301.0" text="Item:" />
       <TextField fx:id="itemTF" layoutX="41.0" layoutY="297.0" />
       <Button fx:id="itemCB" layoutX="190.0" layoutY="297.0" mnemonicParsing="false" onAction="#createItem" text="Create" />
-      <Button fx:id="editButton" layoutX="278.0" layoutY="240.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="77.0" text="Edit" />
+      <Button layoutX="278.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Edit" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="355.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">

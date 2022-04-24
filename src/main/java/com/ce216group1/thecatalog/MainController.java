@@ -1,21 +1,22 @@
 package com.ce216group1.thecatalog;
-// EMRE EVCİN
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends TreeCell<String> implements Initializable {
 
     ArrayList<Type> types = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
@@ -25,16 +26,70 @@ public class MainController implements Initializable {
     private TreeView<String> treeView;
 
     @FXML
+    private TableView<Item> tableView;
+
+    @FXML
     private TextField typeTF;
 
     @FXML
     private TextField itemTF;
 
     @FXML
-    private Button typeCB;
+    private TextField keyTF;
 
     @FXML
-    private Button itemCB;
+    private TextField taggedItemTF;
+
+    @FXML
+    private TextField tagTF;
+
+    @FXML
+    private TextField textField;
+
+
+    ObservableList<Item> list = FXCollections.observableArrayList();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        rootNode.setExpanded(true);
+
+        for (Item item : list) {
+            TreeItem<String> itemLeaf = new TreeItem<>(item.getName());
+            boolean found = false;
+            for (TreeItem<String> typeNode : rootNode.getChildren()) {
+                if (typeNode.getValue().contentEquals(typeTF.getText())) {
+                    typeNode.getChildren().add(itemLeaf);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                TreeItem<String> typeNode = new TreeItem<String>(typeTF.getText());
+                rootNode.getChildren().add(typeNode);
+                typeNode.getChildren().add(itemLeaf);
+            }
+        }
+        treeView.setRoot(rootNode);
+        treeView.setEditable(true);
+
+        tableView.setEditable(true);
+
+
+        TableColumn type = new TableColumn("Type");
+        TableColumn name = new TableColumn("Item");
+
+        tableView.getColumns().addAll(type, name);
+
+
+        type.setCellValueFactory(new PropertyValueFactory<Item, String>("Type"));
+        name.setCellValueFactory(new PropertyValueFactory<Item, String>("Name"));
+
+
+        tableView.setItems(list);
+
+    }
+
 
     @FXML
     void createType() {
@@ -53,14 +108,25 @@ public class MainController implements Initializable {
         }
     }
 
+
     @FXML
     void createItem() {
         if (itemTF.getText().length() != 0) {
             TreeItem<String> newItem = new TreeItem<>(itemTF.getText());
             TreeItem<String> itemNode = treeView.getSelectionModel().getSelectedItem();
-            Item item = new Item(itemTF.getText());
-            items.add(item);
-            itemNode.getChildren().add(newItem);
+            if (itemNode != null && itemNode != rootNode) {
+                Item item = new Item(itemTF.getText());
+                items.add(item);
+                itemNode.getChildren().add(newItem);
+
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Item Creation");
+                alert.setHeaderText("You must select which type you want to add the item to!");
+                alert.setContentText("Please try again by selecting the type you want to add the item to.");
+                alert.showAndWait();
+            }
             itemTF.setText("");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -79,28 +145,37 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void edit(ActionEvent event) {
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view03.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UTILITY);
-            stage.setTitle("Table of Information");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch(
-                Exception e)
+    void delete(ActionEvent e) {
 
-        {
-            System.out.println("Cannot load new window!");
+        TreeItem c = (TreeItem) treeView.getSelectionModel().getSelectedItem();
+        if (c == null) {
+            return;
+        }
+        if (c.getParent() != null) {
+            boolean remove = c.getParent().getChildren().remove(c);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR!");
+            alert.setHeaderText("Something went wrong:/");
+            alert.setContentText("You cannot delete the root!");
+            alert.showAndWait();
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        rootNode.setExpanded(true);
+    @FXML
+    void editTypeAndItem() {
+        TreeItem<String> currentNode = treeView.getSelectionModel().getSelectedItem();
+        currentNode.setValue(textField.getText());
+        currentNode.getChildren().clear();
+    }
 
-        treeView.setRoot(rootNode);
+    @FXML
+    void createKey() {
+        TableColumn key = new TableColumn(keyTF.getText());
+        tableView.getColumns().add(key);
+        keyTF.setText("");
+        key.setCellValueFactory(new PropertyValueFactory<Item, String>(keyTF.getText()));
     }
 
 }
+
