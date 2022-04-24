@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,10 +26,22 @@ public class MainController implements Initializable {
     private TreeView<String> treeView;
 
     @FXML
+    private TableView<Item> tableView;
+
+    @FXML
     private TextField typeTF;
 
     @FXML
     private TextField itemTF;
+
+    @FXML
+    private TextField keyTF;
+
+    @FXML
+    private TextField taggedItemTF;
+
+    @FXML
+    private TextField tagTF;
 
     @FXML
     private Button typeCB;
@@ -94,6 +107,32 @@ public class MainController implements Initializable {
         {
             System.out.println("Cannot load new window!");
         }
+    }
+
+    @FXML
+    void delete(ActionEvent e) {
+
+        TreeItem c = (TreeItem) treeView.getSelectionModel().getSelectedItem();
+        if (c == null) {
+            return;
+        }
+        if (c.getParent() != null) {
+            boolean remove = c.getParent().getChildren().remove(c);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR!");
+            alert.setHeaderText("Something went wrong:/");
+            alert.setContentText("You cannot delete the root!");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void createKey() {
+        TableColumn key = new TableColumn(keyTF.getText());
+        tableView.getColumns().add(key);
+        keyTF.setText("");
+        key.setCellValueFactory(new PropertyValueFactory<Item, String>(keyTF.getText()));
     }
 
     @Override
