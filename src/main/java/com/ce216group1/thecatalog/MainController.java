@@ -152,21 +152,64 @@ public class MainController extends TreeCell<String> implements Initializable {
             return;
         }
         if (c.getParent() != null) {
-            boolean remove = c.getParent().getChildren().remove(c);
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "You are about to delete an element!",
+                    ButtonType.YES,
+                    ButtonType.NO
+            );
+            alert.setTitle("WARNING!");
+            alert.setHeaderText("Do you want to delete this?");
+            alert.setContentText("It may have data inside it");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                boolean var3 = c.getParent().getChildren().remove(c);
+            }
+            if (alert.getResult() == ButtonType.NO) {
+                alert.close();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR!");
-            alert.setHeaderText("Something went wrong:/");
+            alert.setHeaderText("Something went wrong");
             alert.setContentText("You cannot delete the root!");
             alert.showAndWait();
         }
+
     }
 
     @FXML
     void editTypeAndItem() {
         TreeItem<String> currentNode = treeView.getSelectionModel().getSelectedItem();
-        currentNode.setValue(textField.getText());
-        currentNode.getChildren().clear();
+        if (currentNode == null) {
+            return;
+        }
+            if (currentNode != null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING,
+                        "You are about edit an element!",
+                        ButtonType.YES,
+                        ButtonType.NO
+                );
+                alert.setTitle("WARNING!");
+                alert.setHeaderText("Do you want to rename this?");
+                alert.setContentText("It might be valuable");
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.YES) {
+                    currentNode.setValue(textField.getText());
+                    currentNode.getChildren().clear();
+                }
+                if (alert.getResult() == ButtonType.NO) {
+                    alert.close();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR!");
+                alert.setHeaderText("Something went wrong");
+                alert.setContentText("You cannot edit/rename the root!");
+                alert.showAndWait();
+            }
+
+
+
     }
 
     @FXML
