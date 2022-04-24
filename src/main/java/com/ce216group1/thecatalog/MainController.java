@@ -158,7 +158,7 @@ public class MainController extends TreeCell<String> implements Initializable {
             );
             alert.setTitle("WARNING!");
             alert.setHeaderText("Do you want to delete the element named  " + c.getValue() + "  ?");
-            alert.setContentText("It may have data inside it");
+            alert.setContentText("It may have data members inside it");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 boolean var3 = c.getParent().getChildren().remove(c);
@@ -190,7 +190,7 @@ public class MainController extends TreeCell<String> implements Initializable {
                 );
                 alert.setTitle("WARNING!");
                 alert.setHeaderText("Do you want to rename the element named  " + currentNode.getValue() + "  ?");
-                alert.setContentText("It might be valuable");
+                alert.setContentText("This element might be valuable");
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
                     currentNode.setValue(textField.getText());
