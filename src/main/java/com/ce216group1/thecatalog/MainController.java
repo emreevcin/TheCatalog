@@ -1,5 +1,7 @@
 package com.ce216group1.thecatalog;
 // EMRE EVCİN
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,7 @@ public class MainController implements Initializable {
     ArrayList<Type> types = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
     TreeItem<String> rootNode = new TreeItem<String>("My Collection");
+    ObservableList<Item> list = FXCollections.observableArrayList();
 
     @FXML
     private TreeView<String> treeView;
@@ -42,6 +45,9 @@ public class MainController implements Initializable {
 
     @FXML
     private TextField tagTF;
+
+    @FXML
+    private TextField textField;
 
     @FXML
     private Button typeCB;
@@ -71,9 +77,17 @@ public class MainController implements Initializable {
         if (itemTF.getText().length() != 0) {
             TreeItem<String> newItem = new TreeItem<>(itemTF.getText());
             TreeItem<String> itemNode = treeView.getSelectionModel().getSelectedItem();
-            Item item = new Item(itemTF.getText());
-            items.add(item);
-            itemNode.getChildren().add(newItem);
+            if (itemNode != null && itemNode != rootNode) {
+                Item item = new Item(itemTF.getText());
+                items.add(item);
+                itemNode.getChildren().add(newItem);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INFORMATION!");
+                alert.setHeaderText("Something went wrong:/");
+                alert.setContentText("Please enter something.");
+                alert.showAndWait();
+            }
             itemTF.setText("");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -88,24 +102,6 @@ public class MainController implements Initializable {
     void selectItem() {
         TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
         if (item != null) {
-        }
-    }
-
-    @FXML
-    void edit(ActionEvent event) {
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view03.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UTILITY);
-            stage.setTitle("Table of Information");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch(
-                Exception e)
-
-        {
-            System.out.println("Cannot load new window!");
         }
     }
 
@@ -128,6 +124,13 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void editTypeAndItem() {
+        TreeItem<String> currentNode = treeView.getSelectionModel().getSelectedItem();
+        currentNode.setValue(textField.getText());
+        currentNode.getChildren().clear();
+    }
+
+    @FXML
     void createKey() {
         TableColumn key = new TableColumn(keyTF.getText());
         tableView.getColumns().add(key);
@@ -139,7 +142,39 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rootNode.setExpanded(true);
 
+        for (Item item : list) {
+            TreeItem<String> itemLeaf = new TreeItem<>(item.getName());
+            boolean found = false;
+            for (TreeItem<String> typeNode : rootNode.getChildren()) {
+                if (typeNode.getValue().contentEquals(typeTF.getText())) {
+                    typeNode.getChildren().add(itemLeaf);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                TreeItem<String> typeNode = new TreeItem<String>(typeTF.getText());
+                rootNode.getChildren().add(typeNode);
+                typeNode.getChildren().add(itemLeaf);
+            }
+        }
         treeView.setRoot(rootNode);
+        treeView.setEditable(true);
+
+        tableView.setEditable(true);
+
+
+        TableColumn type = new TableColumn("Type");
+        TableColumn name = new TableColumn("Item");
+
+        tableView.getColumns().addAll(type, name);
+
+
+        type.setCellValueFactory(new PropertyValueFactory<Item, String>("Type"));
+        name.setCellValueFactory(new PropertyValueFactory<Item, String>("Name"));
+
+
+        tableView.setItems(list);
     }
 
 }
