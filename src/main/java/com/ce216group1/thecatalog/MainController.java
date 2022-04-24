@@ -189,7 +189,7 @@ public class MainController extends TreeCell<String> implements Initializable {
                         ButtonType.NO
                 );
                 alert.setTitle("WARNING!");
-                alert.setHeaderText("Do you want to rename the element named  " + currentNode.getValue() + "  ?");
+                alert.setHeaderText("Do you want to rename the element named " + currentNode.getValue() + " into " + textField.getText() + " ?");
                 alert.setContentText("This element might be valuable");
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
