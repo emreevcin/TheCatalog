@@ -157,7 +157,7 @@ public class MainController extends TreeCell<String> implements Initializable {
                     ButtonType.NO
             );
             alert.setTitle("WARNING!");
-            alert.setHeaderText("Do you want to delete this?");
+            alert.setHeaderText("Do you want to delete the element named  " + c.getValue() + "  ?");
             alert.setContentText("It may have data inside it");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
@@ -189,7 +189,7 @@ public class MainController extends TreeCell<String> implements Initializable {
                         ButtonType.NO
                 );
                 alert.setTitle("WARNING!");
-                alert.setHeaderText("Do you want to rename this?");
+                alert.setHeaderText("Do you want to rename the element named  " + currentNode.getValue() + "  ?");
                 alert.setContentText("It might be valuable");
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
