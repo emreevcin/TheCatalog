@@ -113,7 +113,21 @@ public class MainController implements Initializable {
             return;
         }
         if (c.getParent() != null) {
-            boolean remove = c.getParent().getChildren().remove(c);
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "You are about to delete an element!",
+                    ButtonType.YES,
+                    ButtonType.NO
+            );
+            alert.setTitle("WARNING!");
+            alert.setHeaderText("Do you want to delete this?:/");
+            alert.setContentText("It may have data inside it");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                boolean remove = c.getParent().getChildren().remove(c);
+            }
+            if (alert.getResult() == ButtonType.NO) {
+                alert.close();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR!");
