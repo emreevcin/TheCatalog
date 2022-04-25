@@ -7,15 +7,15 @@ import java.util.ArrayList;
 public class Type {
     private String name;
     private ArrayList<Item> items;
-    private ArrayList<SimpleStringProperty> attributes;
+    private ArrayList<String> attributes;
 
     public Type(String name) {
         this.name = name;
         items = new ArrayList<>();
-        attributes = new ArrayList<>();
+        attributes = new ArrayList<String>();
     }
 
-    public Type(String name,ArrayList<Item> items, ArrayList<SimpleStringProperty > attributes) {
+    public Type(String name,ArrayList<Item> items, ArrayList<String > attributes) {
         this.name = name;
         this.items = items;
         this.attributes = attributes;
@@ -40,11 +40,11 @@ public class Type {
         this.items = items;
     }
 
-    public ArrayList<SimpleStringProperty> getAttributes() {
+    public ArrayList<String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(ArrayList<SimpleStringProperty> attributes) {
+    public void setAttributes(ArrayList<String> attributes) {
         this.attributes = attributes;
     }
 }
