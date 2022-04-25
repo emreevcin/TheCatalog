@@ -230,7 +230,7 @@ public class MainController extends TreeCell<String> implements Initializable {
         if(type.getParent()==rootNode) {
             for (int i = 0; i < types.size(); i++) {
                 if (types.get(i).getName().equals(type)) {
-                 types.get(i).getAttributes().add(keyTF.getText());
+                    types.get(i).getAttributes().add(keyTF.getText());
                 }
             }
             TableColumn key = new TableColumn(keyTF.getText());
@@ -277,4 +277,3 @@ public class MainController extends TreeCell<String> implements Initializable {
     }
 
 }
-
