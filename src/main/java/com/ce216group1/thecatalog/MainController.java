@@ -3,13 +3,10 @@ package com.ce216group1.thecatalog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 
 import java.net.URL;
@@ -47,12 +44,10 @@ public class MainController extends TreeCell<String> implements Initializable {
     private TextField tagTF;
 
     @FXML
-    private TextField textField;
+    private TextField renameTF;
 
 
     ObservableList<Item> list = FXCollections.observableArrayList();
-    int keyCounter=1;
-    int currentKey=2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -202,15 +197,17 @@ public class MainController extends TreeCell<String> implements Initializable {
                     ButtonType.NO
             );
             alert.setTitle("WARNING!");
-            alert.setHeaderText("Do you want to rename the element named " + currentNode.getValue() + " into " + textField.getText() + " ?");
+            alert.setHeaderText("Do you want to rename the element named " + currentNode.getValue() + " into " + renameTF.getText() + " ?");
             alert.setContentText("This element might be valuable");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
-                currentNode.setValue(textField.getText());
+                currentNode.setValue(renameTF.getText());
                 currentNode.getChildren().clear();
+                renameTF.setText("");
             }
             if (alert.getResult() == ButtonType.NO) {
                 alert.close();
+                renameTF.setText("");
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -219,9 +216,6 @@ public class MainController extends TreeCell<String> implements Initializable {
             alert.setContentText("You cannot edit/rename the root!");
             alert.showAndWait();
         }
-
-
-
     }
 
     @FXML
@@ -237,7 +231,6 @@ public class MainController extends TreeCell<String> implements Initializable {
             tableView.getColumns().add(key);
             editView.getColumns().add(key);
             keyTF.setText("");
-            keyCounter++;
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
