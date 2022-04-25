@@ -29,6 +29,9 @@ public class MainController extends TreeCell<String> implements Initializable {
     private TableView<Item> tableView;
 
     @FXML
+    private TableView<Item> editView;
+
+    @FXML
     private TextField typeTF;
 
     @FXML
@@ -38,7 +41,7 @@ public class MainController extends TreeCell<String> implements Initializable {
     private TextField keyTF;
 
     @FXML
-    private TextField taggedItemTF;
+    private TextField valueTF;
 
     @FXML
     private TextField tagTF;
@@ -48,7 +51,8 @@ public class MainController extends TreeCell<String> implements Initializable {
 
 
     ObservableList<Item> list = FXCollections.observableArrayList();
-
+    int keyCounter=1;
+    int currentKey=2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -80,6 +84,7 @@ public class MainController extends TreeCell<String> implements Initializable {
         TableColumn name = new TableColumn("Item");
 
         tableView.getColumns().addAll(type, name);
+        editView.getColumns().addAll(type, name);
 
 
         type.setCellValueFactory(new PropertyValueFactory<Item, String>("Type"));
@@ -87,6 +92,7 @@ public class MainController extends TreeCell<String> implements Initializable {
 
 
         tableView.setItems(list);
+        editView.setItems(list);
 
     }
 
@@ -115,7 +121,7 @@ public class MainController extends TreeCell<String> implements Initializable {
             TreeItem<String> newItem = new TreeItem<>(itemTF.getText());
             TreeItem<String> itemNode = treeView.getSelectionModel().getSelectedItem();
             if (itemNode != null && itemNode != rootNode) {
-                Item item = new Item(itemTF.getText());
+                Item item = new Item(itemTF.getText(),newItem,itemNode.getValue());
                 items.add(item);
                 itemNode.getChildren().add(newItem);
 
@@ -141,6 +147,13 @@ public class MainController extends TreeCell<String> implements Initializable {
     void selectItem() {
         TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
         if (item != null) {
+            for(int i=0;i<items.size();i++) {
+                if(items.get(i).getTreeItem().equals(item)) {
+                    list.clear();
+                    list.add(items.get(i));
+                    break;
+                }
+            }
         }
     }
 
@@ -182,30 +195,30 @@ public class MainController extends TreeCell<String> implements Initializable {
         if (currentNode == null) {
             return;
         }
-            if (currentNode.getParent() != null) {
-                Alert alert = new Alert(Alert.AlertType.WARNING,
-                        "You are about edit an element!",
-                        ButtonType.YES,
-                        ButtonType.NO
-                );
-                alert.setTitle("WARNING!");
-                alert.setHeaderText("Do you want to rename the element named " + currentNode.getValue() + " into " + textField.getText() + " ?");
-                alert.setContentText("This element might be valuable");
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.YES) {
-                    currentNode.setValue(textField.getText());
-                    currentNode.getChildren().clear();
-                }
-                if (alert.getResult() == ButtonType.NO) {
-                    alert.close();
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR!");
-                alert.setHeaderText("Something went wrong");
-                alert.setContentText("You cannot edit/rename the root!");
-                alert.showAndWait();
+        if (currentNode.getParent() != null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "You are about edit an element!",
+                    ButtonType.YES,
+                    ButtonType.NO
+            );
+            alert.setTitle("WARNING!");
+            alert.setHeaderText("Do you want to rename the element named " + currentNode.getValue() + " into " + textField.getText() + " ?");
+            alert.setContentText("This element might be valuable");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                currentNode.setValue(textField.getText());
+                currentNode.getChildren().clear();
             }
+            if (alert.getResult() == ButtonType.NO) {
+                alert.close();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR!");
+            alert.setHeaderText("Something went wrong");
+            alert.setContentText("You cannot edit/rename the root!");
+            alert.showAndWait();
+        }
 
 
 
@@ -213,10 +226,54 @@ public class MainController extends TreeCell<String> implements Initializable {
 
     @FXML
     void createKey() {
-        TableColumn key = new TableColumn(keyTF.getText());
-        tableView.getColumns().add(key);
-        keyTF.setText("");
-        key.setCellValueFactory(new PropertyValueFactory<Item, String>(keyTF.getText()));
+        TreeItem<String> type = treeView.getSelectionModel().getSelectedItem();
+        if(type.getParent()==rootNode) {
+            for (int i = 0; i < types.size(); i++) {
+                if (types.get(i).getName().equals(type)) {
+                 types.get(i).getAttributes().add(keyTF.getText());
+                }
+            }
+            TableColumn key = new TableColumn(keyTF.getText());
+            tableView.getColumns().add(key);
+            editView.getColumns().add(key);
+            keyTF.setText("");
+            keyCounter++;
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR!");
+            alert.setHeaderText("Something went wrong:/");
+            alert.setContentText("You need to select a type from main menu!");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void createValue() {
+        TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+        if(selectedItem.getParent()!=rootNode && selectedItem!=null) {
+            for(int i=0;i<items.size();i++) {
+                if(items.get(i).getTreeItem().equals(selectedItem)) {
+                    items.get(i).getDescriptions().add(valueTF.getText());
+                }
+            }
+        }
+
+    }
+
+    @FXML
+    void createTag() {
+        TreeItem<String> selectedItem = treeView.getSelectionModel().getSelectedItem();
+        if(selectedItem.getParent()!=rootNode && selectedItem!=null) {
+            for (int i = 0; i < items.size(); i++) {
+                if(items.get(i).getTreeItem().equals(selectedItem)) {
+                    items.get(i).getTags().add(tagTF.getText());
+                    selectedItem.setValue(selectedItem.getValue()+" "+tagTF.getText());
+                    items.get(i).getTags().clear();
+                    tagTF.clear();
+                }
+            }
+        }
     }
 
 }
