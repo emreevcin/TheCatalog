@@ -48,7 +48,7 @@
                                 </MenuBar>
                                 <Button layoutX="348.0" layoutY="318.0" mnemonicParsing="false" onAction="#editTypeAndItem" text="Rename" />
                                 <TextField fx:id="renameTF" layoutX="186.0" layoutY="318.0" prefHeight="26.0" prefWidth="155.0" />
-                                <Label layoutX="32.0" layoutY="323.0" prefHeight="18.0" prefWidth="156.0" text="New Name for Type or Item:" />
+                                <Label layoutX="57.0" layoutY="322.0" prefHeight="18.0" prefWidth="156.0" text="Rename Type or Item:" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -62,30 +62,12 @@
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
-                                <Label layoutX="22.0" layoutY="275.0" text="Field Type:" />
-                                <Label layoutX="14.0" layoutY="309.0" text="Field Name:" />
-                                <Label layoutX="346.0" layoutY="309.0" text="Tag:" />
+                                <Label layoutX="14.0" layoutY="276.0" text="Field Type:" />
+                                <Label layoutX="44.0" layoutY="311.0" text="Tag:" />
                                 <TextField fx:id="keyTF" layoutX="79.0" layoutY="271.0" prefHeight="26.0" prefWidth="120.0" />
-                                <TextField fx:id="valueTF" layoutX="77.0" layoutY="305.0" prefHeight="26.0" prefWidth="122.0" />
-                                <TextField fx:id="tagTF" layoutX="367.0" layoutY="305.0" prefHeight="26.0" prefWidth="126.0" />
+                                <TextField fx:id="tagTF" layoutX="76.0" layoutY="306.0" prefHeight="26.0" prefWidth="126.0" />
                                 <Button layoutX="208.0" layoutY="271.0" mnemonicParsing="false" onAction="#createKey" text="Add" />
-                                <Button layoutX="209.0" layoutY="305.0" mnemonicParsing="false" onAction="#createValue" text="Add" />
-                                <Button layoutX="441.0" layoutY="331.0" mnemonicParsing="false" onAction="#createTag" text="Tag" />
-                                <Button layoutX="248.0" layoutY="305.0" mnemonicParsing="false" text="Null" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Edit">
-                    <content>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-                            <children>
-                                <Label alignment="CENTER" layoutX="66.0" layoutY="289.0" prefHeight="21.0" prefWidth="80.0" text="Old version:" />
-                                <Label alignment="CENTER" layoutX="66.0" layoutY="315.0" prefHeight="21.0" prefWidth="80.0" text="New version:" />
-                                <TextField layoutX="145.0" layoutY="287.0" />
-                                <TextField layoutX="145.0" layoutY="313.0" />
-                                <Button layoutX="302.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" text="Add" />
-                                <TableView fx:id="editView" editable="true" layoutX="-1.0" layoutY="-2.0" prefHeight="266.0" prefWidth="507.0" tableMenuButtonVisible="true" />
+                                <Button layoutX="209.0" layoutY="306.0" mnemonicParsing="false" onAction="#createTag" text="Tag" />
                             </children>
                         </AnchorPane>
                     </content>
